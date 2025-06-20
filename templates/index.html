@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CV Tailor Pro</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    textarea {
+  width: 100%;
+    }
+    input[type="file"] {
+    display: block;
+    margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload your CV and Job Description</h1>
+    <form method="POST" enctype="multipart/form-data" action="/process">
+      <label>CV File (.txt):</label><br>
+      <input type="file" name="cv_file"><br><br>
+      <label>Paste Job Description:</label><br>
+      <textarea name="job_description" rows="10" cols="60"></textarea><br><br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</body>
+</html>
