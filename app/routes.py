@@ -58,3 +58,51 @@ def delete_chat_history():
         return {"message": "Chat history deleted."}, 200
     else:
         return {"message": "No chat history to delete."}, 404
+
+# This part is for the API:
+
+@app.route("/api/rewrite", methods=["POST"])
+def api_rewrite():
+    data = request.get_json()
+
+    cv_lines = data.get("cv_lines", [])
+    job_description = data.get("job_description", "")
+
+    # Validación simple
+    if not cv_lines or not job_description:
+        return {"error": "Missing CV lines or job description"}, 400
+
+    rewritten = rewrite_lines(cv_lines, job_description)
+    return {"rewritten_cv": rewritten}
+
+
+@app.route("/api/chat", methods=["POST"])
+def api_chat():
+    data = request.get_json()
+    prompt = data.get("prompt", "")
+
+    if not prompt:
+        return {"error": "Missing prompt"}, 400
+
+    response = get_response(prompt)
+    return {"response": response}
+
+
+@app.route("/api/chat/history", methods=["GET"])
+def api_get_history():
+    if os.path.exists(CHAT_LOG_PATH):
+        with open(CHAT_LOG_PATH, "r", encoding="utf-8") as f:
+            history = json.load(f)
+    else:
+        history = []
+
+    return {"history": history}
+
+
+@app.route("/api/chat/history", methods=["DELETE"])
+def api_delete_chat_history():
+    if os.path.exists(CHAT_LOG_PATH):
+        os.remove(CHAT_LOG_PATH)
+        return {"message": "Chat history deleted successfully."}, 200
+    else:
+        return {"message": "No chat history found."}, 404
