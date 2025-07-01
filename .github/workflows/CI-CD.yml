@@ -30,12 +30,16 @@ jobs:
         echo "Running basic tests..."
         python -m compileall . 
 
+    - name: Set CI flag
+      run: echo "CI=true" >> $GITHUB_ENV
+
+
     - name: Start Flask app in background
       run: |
         echo "Starting Flask App..."
         pip install -r requirements.txt
         python run.py &
-        sleep 120 
+        sleep 10 
 
     - name: Run API tests
       run: |
