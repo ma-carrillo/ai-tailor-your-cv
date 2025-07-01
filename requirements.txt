@@ -1,0 +1,6 @@
+flask
+transformers
+protobuf
+tiktoken
+torch
+requests
