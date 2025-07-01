@@ -76,24 +76,28 @@ def api_rewrite():
     return {"rewritten_cv": rewritten}
 
 
+import traceback
+
 @app.route("/api/chat", methods=["POST"])
 def api_chat():
     data = request.get_json()
     prompt = data.get("prompt", "")
 
-    print(f"Received prompt: {prompt}")
+    print(f"Received prompt: {prompt}", flush=True)
 
     if not prompt:
-        print("Error: Missing prompt")
+        print("Error: Missing prompt", flush=True)
         return {"error": "Missing prompt"}, 400
 
     try:
         response = get_response(prompt)
-        print(f"AI Response: {response}")
+        print(f"AI Response: {response}", flush=True)
         return {"response": response}
     except Exception as e:
-        print(f"🔥 Exception in /api/chat: {str(e)}")
+        print("Exception occurred:", flush=True)
+        traceback.print_exc()
         return {"error": str(e)}, 500
+
 
 
 
