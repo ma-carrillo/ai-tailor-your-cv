@@ -1,7 +1,7 @@
 from transformers import pipeline
 import os
 
-paraphraser = pipeline("text2text-generation", model="google/flan-t5-small")
+if os.getenv("CI") != "true": paraphraser = pipeline("text2text-generation", model="google/flan-t5-small")
 
 def rewrite_line(cv_line, job_description):
 
@@ -16,7 +16,7 @@ def rewrite_line(cv_line, job_description):
     )
 
     if os.getenv("CI") == "true":
-        response = "Testing..."
+        result = "Testing..."
     else:
         result = paraphraser(prompt, max_new_tokens=max_new_tokens, num_return_sequences=1)[0]["generated_text"].strip()
 

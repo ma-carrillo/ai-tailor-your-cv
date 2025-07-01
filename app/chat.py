@@ -2,7 +2,7 @@ from transformers import pipeline
 import json
 import os
 
-chatbot = pipeline("text2text-generation", model="google/flan-t5-small")
+if os.getenv("CI") != "true": chatbot = pipeline("text2text-generation", model="google/flan-t5-small")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CHAT_LOG_PATH = os.path.join(BASE_DIR, "static", "chat_log.json")
