@@ -30,6 +30,13 @@ jobs:
         echo "Running basic tests..."
         python -m compileall . 
 
+    - name: Start Flask app in background
+      run: |
+        echo "Starting Flask App..."
+        pip install -r requirements.txt
+        python run.py &
+        sleep 5 
+
     - name: Run API tests
       run: |
         echo "Running API tests..."
