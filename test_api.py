@@ -1,39 +1,33 @@
+# test_api.py
+
 import requests
 
 BASE = "http://127.0.0.1:5000"
 
-# ✅ Test /api/chat
-print("=== /api/chat ===")
-chat = requests.post(f"{BASE}/api/chat", json={
-    "prompt": "What should I write in my CV objective?"
-})
-print(chat.status_code)
-print(chat.json())
-print()
+def test_chat_endpoint():
+    response = requests.post(f"{BASE}/api/chat", json={
+        "prompt": "What should I write in my CV objective?"
+    })
+    assert response.status_code == 200
+    assert "response" in response.json()
 
-# ✅ Test /api/rewrite
-print("=== /api/rewrite ===")
-rewrite = requests.post(f"{BASE}/api/rewrite", json={
-    "cv_lines": [
-        "I helped with campaigns",
-        "Made PowerPoints",
-        "Improved email open rate by 20%"
-    ],
-    "job_description": "Looking for a marketing intern who can assist with email campaigns and content creation."
-})
-print(rewrite.status_code)
-print(rewrite.json())
-print()
+def test_rewrite_endpoint():
+    response = requests.post(f"{BASE}/api/rewrite", json={
+        "cv_lines": [
+            "I helped with campaigns",
+            "Made PowerPoints",
+            "Improved email open rate by 20%"
+        ],
+        "job_description": "Looking for a marketing intern who can assist with email campaigns and content creation."
+    })
+    assert response.status_code == 200
+    assert "rewritten_cv" in response.json()
 
-# ✅ Test /api/chat/history (GET)
-print("=== GET /api/chat/history ===")
-history = requests.get(f"{BASE}/api/chat/history")
-print(history.status_code)
-print(history.json())
-print()
+def test_chat_history_get():
+    response = requests.get(f"{BASE}/api/chat/history")
+    assert response.status_code == 200
+    assert "history" in response.json()
 
-# ✅ Test /api/chat/history (DELETE)
-print("=== DELETE /api/chat/history ===")
-delete = requests.delete(f"{BASE}/api/chat/history")
-print(delete.status_code)
-print(delete.json())
+def test_chat_history_delete():
+    response = requests.delete(f"{BASE}/api/chat/history")
+    assert response.status_code in [200, 404]  # Allow both if no history exists

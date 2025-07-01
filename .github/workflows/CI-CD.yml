@@ -21,10 +21,17 @@ jobs:
 
     - name: Install dependencies
       run: |
+        echo "Installing Dependencies..."
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
     - name: Run basic tests
       run: |
-        echo "Running tests..."
+        echo "Running basic tests..."
         python -m compileall . 
+
+    - name: Run API tests
+      run: |
+        echo "Running API tests..."
+        pip install pytest requests
+        pytest test_api.py
