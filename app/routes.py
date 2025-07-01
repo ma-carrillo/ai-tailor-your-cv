@@ -81,11 +81,20 @@ def api_chat():
     data = request.get_json()
     prompt = data.get("prompt", "")
 
+    print(f"Received prompt: {prompt}")
+
     if not prompt:
+        print("Error: Missing prompt")
         return {"error": "Missing prompt"}, 400
 
-    response = get_response(prompt)
-    return {"response": response}
+    try:
+        response = get_response(prompt)
+        print(f"AI Response: {response}")
+        return {"response": response}
+    except Exception as e:
+        print(f"🔥 Exception in /api/chat: {str(e)}")
+        return {"error": str(e)}, 500
+
 
 
 @app.route("/api/chat/history", methods=["GET"])
