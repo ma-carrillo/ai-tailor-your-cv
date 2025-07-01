@@ -35,7 +35,7 @@ jobs:
         echo "Starting Flask App..."
         pip install -r requirements.txt
         python run.py &
-        sleep 5 
+        sleep 120 
 
     - name: Run API tests
       run: |
