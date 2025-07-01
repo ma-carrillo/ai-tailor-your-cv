@@ -1,3 +1,4 @@
+
 # CV Tailor Pro
 
 **CV Tailor Pro** is a lightweight and intelligent web application that automatically rewrites your CV to match a specific job description. It supports both a traditional web interface and a RESTful API for programmatic access.
@@ -11,20 +12,23 @@
 - **Conversation history** stored locally in JSON.
 - **Web interface** built with Flask and HTML/CSS.
 - **REST API** for backend integrations (POST, GET, DELETE).
-- **Testable from Python** using real endpoints.
+- **Automated testing** with `pytest` using a custom script.
+- **Container-ready** with `Dockerfile`.
+- **CI/CD enabled** using GitHub Actions (`.yml` file in `.github/workflows`).
 
 ---
 
 ## Key Technologies & Skills
 
-| Category           | Tools & Skills                                     |
-|--------------------|----------------------------------------------------|
-| Programming      | Python (Flask, requests), HTML, CSS                |
-| AI/ML            | Hugging Face Transformers, Flan-T5                 |
-| API Design       | RESTful endpoints (`GET`, `POST`, `DELETE`)        |
-| Dev Tools        | Git, Virtual Environments, JSON handling           |
-| Testing          | Python scripts, Postman, curl                      |
-| File Handling    | Uploads, parsing `.txt` files, JSON logging        |
+| Category        | Tools & Skills                                         |
+|----------------|--------------------------------------------------------|
+| Programming     | Python (Flask, requests), HTML, CSS                   |
+| AI/ML           | Hugging Face Transformers, Flan-T5                    |
+| API Design      | RESTful endpoints (`GET`, `POST`, `DELETE`)           |
+| DevOps & CI/CD  | GitHub Actions, Docker                |
+| Testing         | Pytest, automated test suite (`test_api.py`)          |
+| Deployment      | Containerization-ready (Docker)                       |
+| File Handling   | Uploads, parsing `.txt` files, JSON logging           |
 
 ---
 
@@ -39,12 +43,12 @@
 
 ## 🔌 REST API Endpoints
 
-| Method | Route                  | Description                          |
-|--------|------------------------|--------------------------------------|
-| POST   | `/api/rewrite`         | Rewrite CV lines to match job        |
+| Method | Route                  | Description                               |
+|--------|------------------------|-------------------------------------------|
+| POST   | `/api/rewrite`         | Rewrite CV lines to match job             |
 | POST   | `/api/chat`            | Ask the chatbot a career-related question |
-| GET    | `/api/chat/history`    | Retrieve the chat history            |
-| DELETE | `/api/chat/history`    | Clear the chat history               |
+| GET    | `/api/chat/history`    | Retrieve the chat history                 |
+| DELETE | `/api/chat/history`    | Clear the chat history                    |
 
 ### Sample Request (POST /api/rewrite)
 
@@ -57,35 +61,6 @@
   "job_description": "Looking for a creative marketing specialist with analytics experience"
 }
 ````
-
----
-
-## Project Structure
-
-```
-cv_tailor_pro/
-│
-├── app/
-│   ├── __init__.py
-│   ├── routes.py          # Flask web + API routes
-│   ├── rewriting.py       # Rewriting logic with LLM
-│   ├── chat.py            # Chatbot engine + history logging
-│   ├── utils.py           # CV file parsing helpers
-│
-├── static/
-│   ├── style.css
-│   └── chat_log.json      # Chat history (JSON)
-│
-├── templates/
-│   ├── index.html
-│   ├── result.html
-│   └── chat.html
-│
-├── run.py
-├── test_api.py            # Python test script for API
-├── requirements.txt
-└── README.md
-```
 
 ---
 
@@ -111,17 +86,29 @@ flask run
 ---
 
 ## API Testing Tools
-* Python script (`test_api.py`)
-* curl from terminal
+
+* Python script: `test_api.py` using `pytest`
+* Python script: `test_api_manual.py` running it manually
+* curl (command line)
 
 ---
 
-## Project Status
+## Docker Support
 
-* Fully functional web app
-* LLM-powered rewriting & chatbot
-* API endpoints tested and working
-* Planned: PDF export, user sessions, internationalization
+You can containerize the app using Docker:
+
+```bash
+docker build -t cv-tailor-pro .
+docker run -p 5000:5000 cv-tailor-pro
+```
+
+---
+
+## CI/CD with GitHub Actions
+
+Every push triggers automated tests using `pytest` via GitHub Actions (`ci-cd.yml`).
+
+This ensures API endpoints and functionality remain stable after changes.
 
 ---
 
