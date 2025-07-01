@@ -33,16 +33,15 @@ jobs:
     - name: Set CI flag
       run: echo "CI=true" >> $GITHUB_ENV
 
-
     - name: Start Flask app in background
       run: |
         echo "Starting Flask App..."
         pip install -r requirements.txt
-        python run.py &
+        python -u run.py &
         sleep 10 
 
     - name: Run API tests
       run: |
         echo "Running API tests..."
         pip install pytest requests
-        pytest test_api.py
+        python -u -m pytest test_api.py
