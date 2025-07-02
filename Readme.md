@@ -41,7 +41,7 @@
 
 ---
 
-## 🔌 REST API Endpoints
+## REST API Endpoints
 
 | Method | Route                  | Description                               |
 |--------|------------------------|-------------------------------------------|
